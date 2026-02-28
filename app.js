@@ -742,3 +742,89 @@ function filterTreolanTable() {
 }
 
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeTreolanModal(); });
+
+// ═══════════════════════════════════════════════════
+//  OCS STOCK MODAL
+// ═══════════════════════════════════════════════════
+const OCS_API = 'https://ocs-api-production-de1e.up.railway.app';
+let ocsData = [];
+let ocsLoaded = false;
+
+function openOcsModal() {
+  document.getElementById('ocs-modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  if (!ocsLoaded) loadOcsData();
+}
+
+function closeOcsModal() {
+  document.getElementById('ocs-modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function closeOcsOnBackdrop(e) {
+  if (e.target === document.getElementById('ocs-modal')) closeOcsModal();
+}
+
+async function loadOcsData() {
+  const body = document.getElementById('ocs-body');
+  body.innerHTML = '<div class="treolan-loading">⏳ Загружаем склад OCS...</div>';
+  document.getElementById('ocs-updated').textContent = 'Загрузка...';
+  try {
+    const res = await fetch(OCS_API + '/api/catalog/all');
+    if (!res.ok) throw new Error('Ошибка ' + res.status);
+    const json = await res.json();
+    ocsData = json.items || [];
+    ocsLoaded = true;
+    const updated = new Date().toLocaleString('ru-RU');
+    document.getElementById('ocs-updated').textContent = `Обновлено: ${updated} · ${ocsData.length} позиций`;
+    document.getElementById('ocs-footer-info').textContent = `Всего: ${ocsData.length} позиций`;
+    filterOcsTable();
+  } catch (e) {
+    body.innerHTML = `<div class="treolan-error">❌ ${e.message}</div>`;
+    document.getElementById('ocs-updated').textContent = 'Ошибка загрузки';
+  }
+}
+
+function filterOcsTable() {
+  const q = document.getElementById('ocs-search').value.toLowerCase();
+  const avail = document.getElementById('ocs-avail-filter').value;
+
+  let filtered = ocsData.filter(item => {
+    const articul = (item.partNumber || item.itemId || '').toLowerCase();
+    const name = (item.itemNameRus || item.itemName || '').toLowerCase();
+    if (q && !articul.includes(q) && !name.includes(q)) return false;
+
+    const stockQty = (item.stock || []).reduce((s, l) => s + (l.quantity || 0), 0);
+    const transitQty = (item.transit || []).reduce((s, l) => s + (l.quantity || 0), 0);
+
+    if (avail === 'avail' && stockQty <= 0) return false;
+    if (avail === 'transit' && transitQty <= 0) return false;
+    if (avail === 'none' && (stockQty > 0 || transitQty > 0)) return false;
+    return true;
+  });
+
+  document.getElementById('ocs-stats').textContent = `Показано: ${filtered.length}`;
+
+  const rows = filtered.map(item => {
+    const stockQty = (item.stock || []).reduce((s, l) => s + (l.quantity || 0), 0);
+    const transitQty = (item.transit || []).reduce((s, l) => s + (l.quantity || 0), 0);
+    const transitDate = (item.transit || []).map(l => l.deliveryDate).filter(Boolean)[0] || '';
+    const name = item.itemNameRus || item.itemName || '---';
+    const articul = item.partNumber || item.itemId || '---';
+    return `<tr>
+      <td><div class="t-articul">${articul}</div></td>
+      <td><div class="t-name">${name}</div></td>
+      <td>${stockQty > 0 ? '<span class="t-badge-avail">В наличии</span>' : '<span class="t-badge-noavail">Нет</span>'}</td>
+      <td><span class="t-stock${stockQty <= 0 ? ' zero' : ''}">${stockQty >= 999 ? 'много' : stockQty}</span></td>
+      <td><span class="t-transit${transitQty <= 0 ? ' zero' : ''}">${transitQty >= 999 ? 'много' : (transitQty || '---')}</span>${transitDate ? `<div class="t-date">${transitDate}</div>` : ''}</td>
+    </tr>`;
+  }).join('');
+
+  document.getElementById('ocs-body').innerHTML = rows.length
+    ? `<table class="treolan-table"><thead><tr><th>Артикул</th><th>Наименование</th><th>Наличие</th><th>Склад</th><th>Транзит</th></tr></thead><tbody>${rows}</tbody></table>`
+    : '<div class="treolan-loading">😶 Ничего не найдено</div>';
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeOcsModal();
+});

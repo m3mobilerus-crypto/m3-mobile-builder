@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>M3 MOBILE / Builder</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app-shell" id="appShell"><header><div class="header-top"><div class="header-brand"><div class="brand-logo">M3 MOBILE <span>/ BUILDER</span></div>
+<div class="header-title" data-i18n="configurator_subtitle">Конфигуратор подбора</div>
+</div>
+<div class="header-actions"><div class="header-links"><button data-i18n="btn_site" class="btn-ghost" onclick="window.open('https://m3mobile.net','_blank')"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/></svg>Сайт</button>
+<button class="btn-ghost" data-i18n="btn_warranty" onclick="window.open('https://www.m3-service.net/searchProduct','_blank')"><svg class="ico" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>Гарантия</button>
+<button data-i18n="btn_service" class="btn-ghost" onclick="showModal('service-centers-modal')"><svg class="ico" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>Сервис</button>
+<button data-i18n="btn_tech_docs" class="btn-ghost" onclick="window.open('https://m3mobile-manual.refined.site/','_blank')"><svg class="ico" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Tech Docs</button>
+</div>
+<div class="lang-row"><button class="btn-ghost lang" onclick="changeLanguage('ru')">RU</button>
+<button class="btn-ghost lang" onclick="changeLanguage('en')">EN</button>
+<button class="btn-ghost lang" onclick="changeLanguage('ko')">KO</button>
+</div>
+</div>
+</div>
+<div class="distributor-row"><span class="distributor-label" data-i18n="distributors">Дистрибьюторы:</span><button class="btn-dist" onclick="openOcsModal()">OCS</button>
+<button class="btn-dist" onclick="openTreolanModal()">Treolan</button>
+ <button class="btn-dist" onclick="openM3StockModal()">Сток M3</button>
+</div>
+<nav class="cat-nav"><button class="cat-btn active" onclick="filterByCategory('all',this)" data-i18n="all_devices">Все устройства</button>
+<button class="cat-btn" onclick="filterByCategory('ultra-rugged',this)">Ultra Rugged</button>
+<button class="cat-btn" onclick="filterByCategory('rugged',this)">Rugged</button>
+<button class="cat-btn" onclick="filterByCategory('light-mobile',this)">Light Mobile</button>
+<button class="cat-btn" onclick="filterByCategory('wearable',this)">Wearable</button>
+<button class="cat-btn" onclick="filterByCategory('kiosk',this)">Kiosk</button>
+</nav>
+<div class="sku-guide-tab"><button data-i18n="btn_how_to_read" onclick="showModal('sku-guide-modal')"><svg class="ico" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>Как читать SKU</button>
+</div>
+</header>
+<div class="search-bar"><a href="https://m3solutionbuilder.tilda.ws/page88650666.html" target="_blank" class="help-cta" data-i18n="btn_dont_know">Я не знаю, что выбрать</a><div class="search-row"><input type="text" id="sku-search" placeholder="Поиск по SKU устройства или аксессуара…" data-i18n-placeholder="search_placeholder" autocomplete="off"><button data-i18n="btn_search" class="btn-search" onclick="searchBySKU()"><svg class="ico" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>Найти</button>
+</div>
+<div class="search-status" id="search-status">Загрузка данных...</div>
+</div>
+<div class="main-layout"><aside class="filters-sidebar"><div class="sidebar-title" data-i18n="filters">Фильтры</div>
+<div class="filter-group"><label class="filter-label" data-i18n="filter_model">Модель</label>
+<select id="model-select" class="filter-select" onchange="updateAndroidOptions();filterSKU();"><option value="" data-i18n="all_models">Все модели</option>
+</select>
+</div>
+<div class="filter-group"><label class="filter-label" data-i18n="filter_android">Android</label>
+<select id="android-select" class="filter-select" onchange="updateScannerOptions();filterSKU();"><option value="" data-i18n="all_android">Любая версия</option>
+</select>
+</div>
+<div class="filter-group"><label class="filter-label" data-i18n="filter_scanner">Сканер</label>
+<select id="scanner-select" class="filter-select" onchange="updateMemoryOptions();filterSKU();"><option value="" data-i18n="all_scanners">Любой сканер</option>
+</select>
+</div>
+<div class="filter-group"><label class="filter-label" data-i18n="filter_memory">Память</label>
+<select id="memory-select" class="filter-select" onchange="updateButtonsOptions();filterSKU();"><option value="" data-i18n="all_memory">Любая память</option>
+</select>
+</div>
+<div class="filter-group"><label class="filter-label" data-i18n="filter_buttons">Кнопки</label>
+<select id="buttons-select" class="filter-select" onchange="updateHandleOptions();filterSKU();"><option value="" data-i18n="all_buttons">Любое кол-во</option>
+</select>
+</div>
+<div class="filter-group"><label class="filter-label" data-i18n="filter_handle">Рукоятка</label>
+<select id="handle-select" class="filter-select" onchange="updateLteOptions();filterSKU();"><option value="" data-i18n="all_handle">Любой тип</option>
+</select>
+</div>
+<div class="filter-group"><label class="filter-label" data-i18n="filter_lte">LTE</label>
+<select id="lte-select" class="filter-select" onchange="updateFrostOptions();filterSKU();"><option value="" data-i18n="lte_any">Не важно</option>
+<option value="YES" data-i18n="lte_yes">Есть LTE</option>
+<option value="NO" data-i18n="lte_no">Нет LTE</option>
+</select>
+</div>
+<div class="filter-group"><label class="filter-label" data-i18n="filter_frozen">Морозостойкость</label>
+<select id="frost-select" class="filter-select" onchange="filterSKU();"><option value="" data-i18n="lte_any">Не важно</option>
+<option value="YES" data-i18n="frozen_yes">Морозостойкий</option>
+<option value="NO" data-i18n="frozen_no">Не морозостойкий</option>
+</select>
+</div>
+<button data-i18n="btn_clear_filters" class="btn-reset" onclick="resetFilters()"><svg class="ico" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Сбросить фильтры</button>
+</aside>
+<div class="results-area"><div class="results-header"><div class="results-heading" data-i18n="results_heading">Результаты подбора</div>
+<div class="results-count" id="results-count">0 SKU</div>
+</div>
+<div id="results-container"><div class="no-results"><p>Загрузка данных…</p></div>
+</div>
+<div class="accessory-panel" id="accessorySelection"><div class="acc-header"><h3 data-i18n="acc_for_sku">Аксессуары для SKU:</h3><span id="selectedSKUCode"></span></div>
+<div class="acc-warning">${t('acc_price_approx')}</div>
+<div class="acc-body"><div id="currentSKUDetails" class="acc-sku-info"></div>
+<div id="accessoriesList"></div>
+<div class="acc-total"><span>${t('spec_total')}</span><strong id="finalConfigurationPrice">0 $</strong></div>
+<button class="btn-add-spec" data-i18n="btn_add_to_spec" onclick="addSKUToSpecification()"><svg class="ico ico-lg" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>Добавить в спецификацию</button>
+</div>
+</div>
+</div>
+</div>
+<div class="spec-table-section" id="finalConfiguration"><div class="spec-table-header"><h3 data-i18n="spec_final">Финальная спецификация</h3><div class="spec-actions"><button data-i18n="btn_add_manual_short" class="btn-sm" onclick="openAddManualSKUModal()"><svg class="ico" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Добавить вручную</button>
+<button class="btn-sm" onclick="exportToCSV()"><svg class="ico" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>CSV</button>
+<button data-i18n="btn_print" class="btn-sm" onclick="printSpec()"><svg class="ico" viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>Печать</button>
+<button class="btn-sm danger" onclick="clearSpecification()"><svg class="ico" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/></svg>Очистить</button>
+</div>
+</div>
+<table id="finalConfigTable"><thead><tr><th>Тип</th>
+<th>SKU</th>
+<th data-i18n="spec_name">Наименование</th>
+<th data-i18n="spec_qty">Кол-во</th>
+<th>Цена, $</th>
+<th data-i18n="spec_total_col">Итого, $</th>
+<th></th>
+</tr>
+</thead><tbody id="specTableBody"></tbody></table>
+</div>
+<div class="app-footer">M3 MOBILE Russia &nbsp;|&nbsp; +7 917 518 6388 &nbsp;|&nbsp;<a href="mailto:russia@m3mobile.co.kr">russia@m3mobile.co.kr</a></div>
+</div>
+<div class="floating-group"><button class="btn-float btn-float-addspec" id="btn-float-addspec" onclick="addSKUToSpecification()"><svg class="ico" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Добавить в спецификацию</button>
+<button class="btn-float btn-float-compare" id="btn-float-compare" onclick="showComparison()"><svg class="ico" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg><span data-i18n="btn_compare_short">Сравнить</span><span class="float-badge" id="comparison-count">0</span></button>
+<button class="btn-float btn-float-spec" id="btn-float-spec" onclick="scrollToSpec()"><svg class="ico" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg><span data-i18n="spec_title">Спецификация</span><span class="float-badge" id="spec-count">0</span></button>
+</div>
+<button id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <svg style="width:22px;height:22px;stroke:#fff;fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;" viewBox="0 0 24 24">
+    <polyline points="18 15 12 9 6 15"/>
+  </svg>
+  <span style="font-size:14px;font-weight:900;color:#fff;line-height:1;letter-spacing:1px">UP</span>
+</button>
+<div class="modal-backdrop" id="service-centers-modal" onclick="closeModalOnBackdrop(event,this)"><div class="modal-box"><div class="modal-head"><h2 data-i18n="service_centers">Наши сервисные центры</h2><button class="modal-close" onclick="closeModal('service-centers-modal')">×</button>
+</div>
+<div class="modal-body"><div class="sc-grid"><div class="sc-item"><a href="https://www.rss.ru/" target="_blank"><img src="https://lh3.googleusercontent.com/d/1oXAGYzJb9raq7cM-i5xsk51-2vPB0jR6" alt="RSS"></a></div>
+<div class="sc-item"><a href="https://wetm.ru/servisniy-tsentr/" target="_blank"><img src="https://lh3.googleusercontent.com/d/1fqjIYfiHDvBcsADEqSzS_vC-bCED3GI7" alt="WETM"></a></div>
+</div>
+</div>
+</div>
+</div>
+<div class="modal-backdrop" id="sku-guide-modal" onclick="closeModalOnBackdrop(event,this)"><div class="modal-box"><div class="modal-head"><h2>Как читать SKU</h2><button class="modal-close" onclick="closeModal('sku-guide-modal')">×</button>
+</div>
+<div class="modal-body"><div class="sku-guide-content"><p data-i18n="sku_guide_desc">Руководство по чтению SKU поможет вам понять структуру артикулов продукции M3 MOBILE.</p><p data-i18n="btn_download_hint">Нажмите кнопку ниже, чтобы скачать файл:</p><a href="https://docs.google.com/spreadsheets/d/1IPSD12w8M4azk_ICRiBglxboGIjoe0Hh/export?format=xlsx" class="btn-download" download="M3_MOBILE_SKU_Guide.xlsx"><svg class="ico ico-lg" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg><span data-i18n="btn_download_sku">Скачать руководство по SKU</span></a></div>
+</div>
+</div>
+</div>
+<div class="modal-backdrop" id="comparison-modal" onclick="closeModalOnBackdrop(event,this)"><div class="modal-box wide"><div class="modal-head"><h2 data-i18n="comparison_title_modal">Сравнение SKU</h2><button class="modal-close" onclick="closeModal('comparison-modal')">×</button>
+</div>
+<div class="modal-body" id="comparison-body"></div>
+</div>
+</div>
+<div class="modal-backdrop" id="manual-sku-modal" onclick="closeModalOnBackdrop(event,this)"><div class="modal-box"><div class="modal-head"><h2 data-i18n="btn_add_manual">Добавить артикул вручную</h2><button class="modal-close" onclick="closeModal('manual-sku-modal')">×</button>
+</div>
+<div class="modal-body"><div class="form-group"><label class="form-label" data-i18n="spec_sku">Артикул (SKU)</label>
+<input type="text" id="manual-sku" class="form-input" placeholder="Введите артикул"></div>
+<div class="form-group"><label class="form-label">Наименование</label>
+<textarea id="manual-name" class="form-textarea" placeholder="Введите наименование"></textarea></div>
+<div class="form-group"><label class="form-label" data-i18n="spec_price">Цена ($)</label>
+<input type="number" id="manual-price" class="form-input" placeholder="0.00" min="0" step="0.01"></div>
+<div class="form-actions"><button class="btn-cancel" onclick="closeModal('manual-sku-modal')" data-i18n="btn_cancel">Отмена</button>
+<button class="btn-submit" onclick="addManualSKU()" data-i18n="btn_add_short">Добавить</button>
+</div>
+</div>
+</div>
+</div>
+<div class="toast" id="toast"></div>
+<div class="lightbox" id="lightbox" onclick="closeLightbox()"><button class="lightbox-close" onclick="closeLightbox()">&#x2715;</button>
+<img id="lightbox-img" src="" alt=""></div>
+
+<!-- ═══════════════════════════════════════════════════
+     TREOLAN STOCK MODAL — вставить перед </body>
+═══════════════════════════════════════════════════ -->
+<style>
+.treolan-modal-backdrop{display:none;position:fixed;inset:0;background:rgba(13,14,26,.6);z-index:4000;backdrop-filter:blur(4px);align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto}
+.treolan-modal-backdrop.open{display:flex}
+.treolan-modal{background:#fff;border-radius:16px;box-shadow:0 20px 60px rgba(13,14,26,.2);width:100%;max-width:980px;margin:auto;position:relative;animation:modalIn .2s ease}
+.treolan-modal-head{background:linear-gradient(135deg,#151960,#2764E2);color:#fff;padding:18px 24px;border-radius:16px 16px 0 0;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.treolan-modal-head h2{font-size:17px;font-weight:700}
+.treolan-modal-head .t-meta{font-size:12px;opacity:.75}
+.treolan-close{background:rgba(255,255,255,.15);border:none;color:#fff;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;transition:.2s;flex-shrink:0}
+.treolan-close:hover{background:rgba(255,255,255,.3)}
+.treolan-toolbar{padding:14px 20px;background:#F4F5F9;border-bottom:1px solid #DDE0EC;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.treolan-search{flex:1;min-width:200px;padding:9px 14px;border:1.5px solid #DDE0EC;border-radius:8px;font-size:14px;font-family:inherit;outline:none;transition:.2s}
+.treolan-search:focus{border-color:#2764E2;box-shadow:0 0 0 3px rgba(39,100,226,.1)}
+.treolan-filter{padding:9px 12px;border:1.5px solid #DDE0EC;border-radius:8px;font-size:13px;font-family:inherit;background:#fff;outline:none;cursor:pointer;min-width:140px}
+.treolan-stats{font-size:13px;color:#5A607A;white-space:nowrap}
+.treolan-body{padding:16px 20px;max-height:65vh;overflow-y:auto}
+.treolan-loading{text-align:center;padding:40px;color:#5A607A;font-size:15px}
+.treolan-error{text-align:center;padding:30px;color:#FF644A;font-weight:600}
+.treolan-table{width:100%;border-collapse:collapse;font-size:13.5px}
+.treolan-table thead th{background:#1E2171;color:#fff;padding:10px 12px;text-align:left;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;position:sticky;top:0;z-index:1}
+.treolan-table tbody tr{border-bottom:1px solid #ECEEF5;transition:background .15s}
+.treolan-table tbody tr:hover{background:#F4F5F9}
+.treolan-table td{padding:9px 12px;vertical-align:middle}
+.t-articul{font-family:'DM Mono',monospace;font-size:13px;font-weight:500;color:#0D0E1A}
+.t-name{color:#0D0E1A;font-size:13px;line-height:1.4;max-width:340px}
+.t-stock{font-weight:700;color:#22C55E}
+.t-stock.zero{color:#FF644A}
+.t-transit{color:#F59E0B;font-weight:600}
+.t-transit.zero{color:#AAB0C6;font-weight:400}
+.t-badge-avail{background:#DCFCE7;color:#15803D;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700}
+.t-badge-noavail{background:#FEE2E2;color:#DC2626;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700}
+.treolan-footer{padding:12px 20px;background:#F4F5F9;border-top:1px solid #DDE0EC;border-radius:0 0 16px 16px;display:flex;justify-content:space-between;align-items:center;font-size:13px;color:#5A607A}
+.t-refresh-btn{background:#1E2171;color:#fff;border:none;padding:8px 16px;border-radius:8px;cursor:pointer;font-size:13px;font-weight:600;font-family:inherit;transition:.2s}
+.t-refresh-btn:hover{background:#2764E2}
+</style>
+
+<div class="treolan-modal-backdrop" id="treolan-modal" onclick="closeTreolanOnBackdrop(event)">
+  <div class="treolan-modal">
+    <div class="treolan-modal-head">
+      <div>
+        <h2>Склад Treolan — M3 Mobile</h2>
+        <div class="t-meta" id="treolan-updated">Загрузка...</div>
+      </div>
+      <button class="treolan-close" onclick="closeTreolanModal()">✕</button>
+    </div>
+    <div class="treolan-toolbar">
+      <input class="treolan-search" id="treolan-search" placeholder="Поиск по артикулу или названию..." oninput="filterTreolanTable()">
+      <select class="treolan-filter" id="treolan-avail-filter" onchange="filterTreolanTable()">
+        <option value="">Все позиции</option>
+        <option value="avail">Есть на складе</option>
+        <option value="transit">Есть транзит</option>
+        <option value="none">Нет в наличии</option>
+      </select>
+      <span class="treolan-stats" id="treolan-stats"></span>
+    </div>
+    <div class="treolan-body" id="treolan-body">
+      <div class="treolan-loading">⏳ Загрузка данных...</div>
+    </div>
+    <div class="treolan-footer">
+      <span id="treolan-footer-info">Данные обновляются в реальном времени</span>
+      <button class="t-refresh-btn" onclick="loadTreolanData()">Обновить</button>
+    </div>
+  </div>
+</div>
+
+<!-- OCS STOCK MODAL -->
+<div class="treolan-modal-backdrop" id="ocs-modal" onclick="closeOcsOnBackdrop(event)">
+  <div class="treolan-modal">
+    <div class="treolan-modal-head">
+      <div>
+        <h2>Склад OCS — M3 Mobile</h2>
+        <div class="t-meta" id="ocs-updated">Загрузка...</div>
+      </div>
+      <button class="treolan-close" onclick="closeOcsModal()">✕</button>
+    </div>
+    <div class="treolan-toolbar">
+      <input class="treolan-search" id="ocs-search" placeholder="Поиск по артикулу или названию..." oninput="filterOcsTable()">
+      <select class="treolan-filter" id="ocs-avail-filter" onchange="filterOcsTable()">
+        <option value="all">Все позиции</option>
+        <option value="avail">Только в наличии</option>
+        <option value="transit">Только транзит</option>
+        <option value="none">Нет в наличии</option>
+      </select>
+      <span class="treolan-stats" id="ocs-stats"></span>
+    </div>
+    <div class="treolan-body" id="ocs-body">
+      <div class="treolan-loading">⏳ Загружаем данные...</div>
+    </div>
+    <div class="treolan-footer">
+      <span id="ocs-footer-info"></span>
+      <button class="t-refresh-btn" onclick="loadOcsData()">Обновить</button>
+    </div>
+  </div>
+</div>
+
+<!-- M3 STOCK MODAL -->
+<div class="treolan-modal-backdrop" id="m3stock-modal" onclick="closeM3StockOnBackdrop(event)">
+  <div class="treolan-modal">
+    <div class="treolan-modal-head">
+      <div>
+        <h2>Сток M3 Mobile</h2>
+        <div class="t-meta" id="m3stock-updated">Загрузка...</div>
+      </div>
+      <button class="treolan-close" onclick="closeM3StockModal()">✕</button>
+    </div>
+    <div class="treolan-toolbar">
+      <input class="treolan-search" id="m3stock-search" placeholder="Поиск по артикулу или названию..." oninput="filterM3StockTable()">
+      <select class="treolan-filter" id="m3stock-avail-filter" onchange="filterM3StockTable()">
+        <option value="all">Все позиции</option>
+        <option value="avail">Только в наличии</option>
+        <option value="none">Нет в наличии</option>
+      </select>
+      <span class="treolan-stats" id="m3stock-stats"></span>
+    </div>
+    <div class="treolan-body" id="m3stock-body">
+      <div class="treolan-loading">⏳ Загружаем данные...</div>
+    </div>
+    <div class="treolan-footer">
+      <span id="m3stock-footer-info">Данные обновляются в реальном времени</span>
+      <button class="t-refresh-btn" onclick="m3StockLoaded=false;loadM3StockData()">Обновить</button>
+    </div>
+  </div>
+</div>
+<script src="app.js"></script>
+</body>
+</html>

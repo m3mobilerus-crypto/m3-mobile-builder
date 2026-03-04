@@ -1,8 +1,8 @@
 :root{--navy:#1E2171;--blue:#2764E2;--blue-lt:#EEF3FD;--coral:#FF644A;--coral-lt:#FFF0ED;--ink:#0D0E1A;--slate:#5A607A;--mist:#F4F5F9;--border:#DDE0EC;--white:#FFFFFF;--green:#22C55E;--amber:#F59E0B;--purple:#8B5CF6;--cyan:#06B6D4;--radius:10px;--radius-lg:16px;--shadow-sm:0 1px 3px rgba(13,14,26,.08);--shadow-md:0 4px 16px rgba(13,14,26,.10);--shadow-lg:0 12px 40px rgba(13,14,26,.14);--transition:.2s ease}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;overflow-x:hidden}
-body{overflow-y:auto;overflow-x:hidden;max-width:100%;position:relative;min-height:100vh;font-family:'Inter',system-ui,sans-serif;background:#ECEEF5;color:var(--ink);font-size:15px;line-height:1.6}
-.app-shell{max-width:1360px;width:100%;margin:0 auto;background:var(--white);border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);overflow:hidden;margin-top:16px;margin-bottom:80px}
+html{scroll-behavior:smooth}
+body{overflow-y:auto;overflow-x:hidden;min-height:100vh;font-family:'Inter',system-ui,sans-serif;background:#ECEEF5;color:var(--ink);font-size:15px;line-height:1.6}
+.app-shell{max-width:1360px;margin:0 auto;background:var(--white);border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);overflow:hidden;margin-top:16px;margin-bottom:80px}
 header{background:linear-gradient(135deg,#151960 0%,#1E2171 55%,#2764E2 100%);padding:16px 24px 0;position:relative;overflow:hidden}
 header::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");pointer-events:none}
 .header-top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap}
@@ -59,7 +59,7 @@ header::before{content:'';position:absolute;inset:0;background:url("data:image/s
 .card-gallery{flex-shrink:0;display:flex;flex-direction:column;gap:6px;align-items:center}
 .gallery-main{width:200px;height:200px;border-radius:10px;border:1.5px solid var(--border);background:var(--mist);object-fit:contain;padding:8px;cursor:zoom-in;transition:border-color var(--transition),box-shadow var(--transition);image-rendering:crisp-edges}
 .gallery-main:hover{border-color:var(--blue);box-shadow:0 0 0 3px rgba(39,100,226,.1)}
-.sku-desc-box{font-size:14.5px;color:var(--ink);background:var(--mist);border-radius:8px;padding:10px 14px;margin-top:10px;line-height:1.5;max-width:700px;overflow:hidden;word-break:break-word;overflow-wrap:break-word}
+.sku-desc-box{font-size:14.5px;color:var(--ink);background:var(--mist);border-radius:8px;padding:10px 14px;margin-top:10px;line-height:1.5;max-width:700px}
 .gallery-thumbs{display:flex;gap:5px;flex-wrap:wrap;justify-content:center}
 .gallery-thumb{width:44px;height:44px;border-radius:6px;border:1.5px solid var(--border);background:var(--mist);object-fit:contain;padding:3px;cursor:pointer;transition:border-color var(--transition),opacity var(--transition);opacity:.6}
 .gallery-thumb:hover{opacity:1;border-color:#aab}
@@ -264,7 +264,7 @@ mark{background:#FEF9C3;color:var(--ink);border-radius:2px;padding:0 2px}
 .results-area{padding:12px}
 .card-inner{padding:14px 14px 14px 18px}
 .gallery-main{width:90px;height:90px}
-.gallery-thumbs{display:none}
+.gallery-thumbs{display:flex;flex-wrap:wrap;gap:5px}
 .floating-group{right:12px;bottom:12px}
 .btn-float{font-size:12px;padding:10px 14px}
 .card-actions{flex-wrap:wrap;gap:6px}
@@ -563,112 +563,4 @@ mark{background:#FEF9C3;color:var(--ink);border-radius:2px;padding:0 2px}
   .header-links + .lang-row {
     margin-left: 0 !important;
   }
-}
-
-/* ═══════════════════════════════════
-   MOBILE — DEFINITIVE FIX
-═══════════════════════════════════ */
-@media (max-width: 860px) {
-  html, body {
-    overflow-x: hidden !important;
-    max-width: 100vw !important;
-  }
-  .app-shell {
-    width: 100% !important;
-    max-width: 100vw !important;
-    overflow-x: hidden !important;
-    margin-top: 0 !important;
-    border-radius: 0 !important;
-  }
-  .main-layout {
-    flex-direction: column !important;
-  }
-  .filters-sidebar {
-    width: 100% !important;
-    max-height: none !important;
-    position: static !important;
-    border-right: none !important;
-    border-bottom: 1px solid var(--border) !important;
-  }
-  .results-area {
-    padding: 12px !important;
-    width: 100% !important;
-    box-sizing: border-box !important;
-    overflow-x: hidden !important;
-  }
-  .result-card, .acc-result-card {
-    width: 100% !important;
-    box-sizing: border-box !important;
-    overflow: hidden !important;
-  }
-  .card-inner {
-    box-sizing: border-box !important;
-    width: 100% !important;
-    overflow: hidden !important;
-  }
-  .card-top {
-    flex-direction: column !important;
-    align-items: stretch !important;
-    width: 100% !important;
-    gap: 10px !important;
-  }
-  .card-meta {
-    flex: 1 !important;
-    min-width: 0 !important;
-    overflow: hidden !important;
-    width: 100% !important;
-  }
-  .card-gallery {
-    width: 100% !important;
-    flex-direction: row !important;
-    justify-content: flex-start !important;
-  }
-  .gallery-main {
-    width: 100px !important;
-    height: 100px !important;
-    flex-shrink: 0 !important;
-  }
-  .sku-desc-box {
-    max-width: 100% !important;
-    overflow: hidden !important;
-    word-break: break-word !important;
-    white-space: normal !important;
-  }
-  .card-actions {
-    flex-wrap: wrap !important;
-    width: 100% !important;
-  }
-  .card-actions .btn-action {
-    flex: 1 1 calc(50% - 4px) !important;
-    min-width: 120px !important;
-    justify-content: center !important;
-    text-align: center !important;
-    white-space: normal !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
-  }
-  .decode-blocks {
-    flex-wrap: nowrap !important;
-    overflow-x: auto !important;
-    -webkit-overflow-scrolling: touch !important;
-  }
-  .header-links {
-    display: none !important;
-  }
-  .distributor-row {
-    flex-wrap: wrap !important;
-  }
-}
-@media (max-width: 520px) {
-  .card-inner { padding: 12px 12px 12px 16px !important; }
-  .gallery-main { width: 80px !important; height: 80px !important; }
-  .card-actions .btn-action {
-    flex: 1 1 100% !important;
-    width: 100% !important;
-    min-width: 0 !important;
-  }
-  .sku-code { font-size: 14px !important; }
-  .sku-price { font-size: 16px !important; }
-  .decode-block { min-width: 56px !important; padding: 6px 8px !important; }
-  .decode-block-letter { font-size: 16px !important; }
 }

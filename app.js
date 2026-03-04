@@ -443,23 +443,27 @@ const badges=getBadges(sku);
 const badgeHtml=badges.map(b=>'<span class="badge '+b.cls+'">'+b.text+'</span>').join('');
 const priceHtml=sku.price?'<div class="sku-price">'+sku.price.toLocaleString('ru-RU')+' $</div>':'<div class="sku-price no-price">Цена по запросу</div>';
 const descHtml=sku.description?'<div class="sku-desc-box">'+sku.description+'</div>':'';
+const isMobile=window.innerWidth<=860;
 card.innerHTML=
 '<div class="card-inner">'+
-'<div class="card-top">'+
-'<div class="card-meta">'+
+'<div class="card-top" style="display:flex;flex-direction:'+(isMobile?'column':'row')+';gap:12px;">'+
+(isMobile?'<div class="gallery-slot"></div>':'')+
+'<div class="card-meta" style="flex:1;min-width:0;overflow:hidden;">'+
 '<div class="sku-code">'+sku.sku+'</div>'+
 priceHtml+
 descHtml+
 '</div>'+
-'<div class="gallery-slot"></div>'+
+(isMobile?'':'<div class="gallery-slot"></div>')+
 '</div>'+
 '<div class="badge-row">'+badgeHtml+'</div>'+
-'<div class="card-actions"></div>'+
+'<div class="card-actions" style="display:flex;flex-wrap:wrap;gap:8px;"></div>'+
 '</div>';
 const galleryDiv=$$('div');
 galleryDiv.className='card-gallery';
+if(isMobile){galleryDiv.style.cssText='width:100%;margin-bottom:10px;';}
 const mainImgEl=$$('img');
 mainImgEl.className='gallery-main';
+if(isMobile){mainImgEl.style.cssText='width:100px;height:100px;';}
 mainImgEl.src=mainImg;
 mainImgEl.alt=sku.model;
 mainImgEl.addEventListener('click',()=>openLightbox(mainImgEl.src));
@@ -486,27 +490,27 @@ const actionsDiv=card.querySelector('.card-actions');
 const inCompare=comparisonList.includes(sku.sku);
 const btnPrimary=$$('button');
 btnPrimary.className='btn-action btn-primary';
+if(isMobile){btnPrimary.style.cssText='width:100%;justify-content:center;';}
 btnPrimary.textContent=t('btn_select_acc');
 btnPrimary.addEventListener('click',()=>showAccessorySelection(sku.sku));
 actionsDiv.appendChild(btnPrimary);
 if(MODEL_ACCESSORY_GUIDES[sku.model]){
 const btnAcc=$$('button');
 btnAcc.className='btn-action btn-outline';
-btnAcc.textContent=t('btn_acc_guide');
-btnAcc.style.color='var(--coral)';
+if(isMobile){btnAcc.style.cssText='width:100%;justify-content:center;color:var(--coral);';}else{btnAcc.style.color='var(--coral)';}
 btnAcc.addEventListener('click',()=>window.open(_D+MODEL_ACCESSORY_GUIDES[sku.model]+'/view','_blank'));
 actionsDiv.appendChild(btnAcc);
 }
 if(MODEL_SPECS[sku.model]){
 const btnSpec=$$('button');
 btnSpec.className='btn-action btn-outline';
-btnSpec.textContent=t('btn_spec')+' ('+sku.model+')';
-btnSpec.style.color='var(--coral)';
+if(isMobile){btnSpec.style.cssText='width:100%;justify-content:center;color:var(--coral);';}else{btnSpec.style.color='var(--coral)';}
 btnSpec.addEventListener('click',()=>window.open(_D+MODEL_SPECS[sku.model]+'/view','_blank'));
 actionsDiv.appendChild(btnSpec);
 }
 const btnCmp=$$('button');
 btnCmp.className='btn-action btn-compare'+(inCompare?' in-compare':'');
+if(isMobile){btnCmp.style.cssText='width:100%;justify-content:center;';}
 btnCmp.textContent=inCompare?'✓ '+t('btn_add_compare'):t('btn_add_compare');
 btnCmp.addEventListener('click',()=>toggleComparison(sku.sku));
 actionsDiv.appendChild(btnCmp);

@@ -248,14 +248,33 @@ mark{background:#FEF9C3;color:var(--ink);border-radius:2px;padding:0 2px}
 .main-layout{flex-direction:column}
 .filters-sidebar{width:100%;max-height:none;position:static;border-right:none;border-bottom:1px solid var(--border)}
 .gallery-main{width:150px;height:150px}
+.card-top{flex-direction:column-reverse;align-items:stretch}
+.card-gallery{flex-direction:row;justify-content:flex-start;align-items:center}
+.gallery-main{width:120px;height:120px}
+.card-actions{flex-wrap:wrap}
+.card-actions .btn-action{flex:1 1 calc(50% - 4px);min-width:120px}
+.decode-blocks{overflow-x:auto;flex-wrap:nowrap;padding-bottom:6px}
+.decode-blocks::-webkit-scrollbar{height:4px}
+.decode-blocks::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+.sku-decode-panel{overflow-x:hidden}
+.decode-string-row{word-break:break-word;overflow-wrap:break-word}
 }
 @media(max-width:520px){header{padding:20px 16px 0}
 .search-bar{padding:14px 16px}
-.results-area{padding:16px}
-.gallery-main{width:100px;height:100px}
+.results-area{padding:12px}
+.card-inner{padding:14px 14px 14px 18px}
+.gallery-main{width:90px;height:90px}
 .gallery-thumbs{display:none}
 .floating-group{right:12px;bottom:12px}
 .btn-float{font-size:12px;padding:10px 14px}
+.card-actions{flex-wrap:wrap;gap:6px}
+.card-actions .btn-action{flex:1 1 100%;min-width:0}
+.sku-code{font-size:16px}
+.sku-price{font-size:18px}
+.decode-block{min-width:60px;padding:6px 8px}
+.decode-block-letter{font-size:18px}
+.results-area{padding:10px}
+.card-inner{padding:12px 12px 12px 16px}
 }
 
 /* Treolan Modal */

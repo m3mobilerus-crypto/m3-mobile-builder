@@ -1109,7 +1109,7 @@ async function loadTreolanData() {
     const res = await fetch(TREOLAN_API + '/api/catalog');
     if (!res.ok) throw new Error('Ошибка ' + res.status);
     const json = await res.json();
-    treolanData = json.items || [];
+    treolanData = (json.items || []).filter(item => item.vendor === 'M3 Mobile');
     window.TREOLAN_DATA = treolanData;
     treolanLoaded = true;
     window.treolanLoaded = true;
@@ -1632,7 +1632,7 @@ async function _fetchTreolan() {
   if (treolanLoaded && treolanData.length) return treolanData;
   const res = await fetch(TREOLAN_API + '/api/catalog');
   const json = await res.json();
-  treolanData = json.items || [];
+  treolanData = (json.items || []).filter(item => item.vendor === 'M3 Mobile');
   treolanLoaded = true;
   return treolanData;
 }

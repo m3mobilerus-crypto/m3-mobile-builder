@@ -741,7 +741,7 @@ const p=sku.split('-'),p2=p[1]||'',p3=p[2]||'';
 const ver=p2[0]||'',scan=p2[1]||'',cam=p2[2]||'',lcd=p2[3]||'',kp=p2[4]||'',bat=p2[5]||'';
 const blocks=[
 _b('PC10','Model','PC10','is-model'),
-_b(ver,'OS Version',{'T':'Android 14'}[ver]||ver),
+_b(ver,'OS Version',{'T':'Android 13'}[ver]||ver),
 _b(scan,'Scanner',{'2':'SE4710'}[scan]||scan),
 _b(cam,'Camera',{'F':'Front only','R':'Rear only','B':'Front+Rear','N':'No Camera'}[cam]||cam),
 _b(lcd,'LCD',{'F':'FHD','H':'HD'}[lcd]||lcd),

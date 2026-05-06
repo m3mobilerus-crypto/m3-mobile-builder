@@ -1083,7 +1083,7 @@ document.addEventListener('keydown',e=>{
   });
 });
 
-const TREOLAN_API = 'http://89.167.120.241:3001';
+const TREOLAN_API = 'https://figured-moderators-greatest-underlying.trycloudflare.com';
 let treolanData = [];
 let treolanLoaded = false;
 
@@ -1172,7 +1172,7 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeTreolan
 // ═══════════════════════════════════════════════════
 //  OCS STOCK MODAL
 // ═══════════════════════════════════════════════════
-const OCS_API = 'http://89.167.120.241:3000';
+const OCS_API = 'https://borders-photographic-david-january.trycloudflare.com';
 let ocsData = [];
 let ocsLoaded = false;
 

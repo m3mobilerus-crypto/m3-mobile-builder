@@ -1083,7 +1083,7 @@ document.addEventListener('keydown',e=>{
   });
 });
 
-cconst TREOLAN_API = 'http://89.167.120.241:3001';
+const TREOLAN_API = 'http://89.167.120.241:3001';
 let treolanData = [];
 let treolanLoaded = false;
 

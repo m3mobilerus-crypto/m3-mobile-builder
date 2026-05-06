@@ -1172,7 +1172,7 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeTreolan
 // ═══════════════════════════════════════════════════
 //  OCS STOCK MODAL
 // ═══════════════════════════════════════════════════
-const OCS_API = 'https://ocs-api-production-de1e.up.railway.app';
+const OCS_API = 'http://89.167.120.241:3000';
 let ocsData = [];
 let ocsLoaded = false;
 

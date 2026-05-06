@@ -1083,7 +1083,7 @@ document.addEventListener('keydown',e=>{
   });
 });
 
-const TREOLAN_API = 'https://treolanapi-production.up.railway.app';
+cconst TREOLAN_API = 'http://89.167.120.241:3001';
 let treolanData = [];
 let treolanLoaded = false;
 

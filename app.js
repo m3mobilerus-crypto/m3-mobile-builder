@@ -412,7 +412,7 @@ finalSpecificationList.push({type:'Accessory',sku:acc.sku,name:acc.description||
 renderFinalSpecification();
 showToast(`${acc.sku} добавлен в спецификацию`);
 }
-function getBadges(sku){const badges=[];if(parseFloat(sku.android)>=13){const androidVer=parseFloat(sku.android);const androidBadgeText=androidVer<14?`Android ${Math.floor(androidVer)} Ready`:t('badge_android_ready');badges.push({cls:'android-ready',text:androidBadgeText});};if(ENTERPRISE_MODELS.includes(sku.model))badges.push({cls:'enterprise',text:t('badge_enterprise')});const ip=IP_RATINGS[sku.model];if(ip)badges.push({cls:'ip-badge',text:ip});if(sku.lte==='YES')badges.push({cls:'lte',text:t('badge_4g')});if(sku.frost==='YES'&&sku.model!=='SL20'&&sku.model!=='SL20P'&&sku.model!=='SL20K')badges.push({cls:'frozen',text:t('badge_frozen')});if(sku.model==='SM24','SM25')badges.push({cls:'new-coming',text:'★ NEW '});return badges;}
+function getBadges(sku){const badges=[];if(parseFloat(sku.android)>=13){const androidVer=parseFloat(sku.android);const androidBadgeText=androidVer<14?`Android ${Math.floor(androidVer)} Ready`:t('badge_android_ready');badges.push({cls:'android-ready',text:androidBadgeText});};if(ENTERPRISE_MODELS.includes(sku.model))badges.push({cls:'enterprise',text:t('badge_enterprise')});const ip=IP_RATINGS[sku.model];if(ip)badges.push({cls:'ip-badge',text:ip});if(sku.lte==='YES')badges.push({cls:'lte',text:t('badge_4g')});if(sku.frost==='YES'&&sku.model!=='SL20'&&sku.model!=='SL20P'&&sku.model!=='SL20K')badges.push({cls:'frozen',text:t('badge_frozen')});if(sku.model==='SM24')badges.push({cls:'new-coming',text:'★ NEW '});return badges;}
 function renderResults(list){
   const container=$('results-container');
   if(!list.length){

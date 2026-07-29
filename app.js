@@ -738,7 +738,7 @@ _b(kp,'Keypad',{'S':'—'}[kp]||kp),
 _b(bat,'Battery',{'E':'5000mAh'}[bat]||bat),
 p3?_b(p3,'Special',{'HF':'HF (HF/NFC)','TH':'Integrated Trigger'}[p3]||p3,'is-special'):null,
 ];
-const androidBadge=ver==='T'?'Android 13 Ready':'Android 14 Ready':'Android 16 Ready';
+const androidBadge=ver==='T'?'Android 13 Ready':'Android 14 Ready':'Android 16 Ready'
 return {blocks,warning:'',tags:[{label:androidBadge}]};
 }
 function decodeSKU_SL20K(sku){

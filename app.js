@@ -533,7 +533,8 @@ else if(sku.startsWith('SL20')) res=decodeSKU_SL20(sku);
 else if(sku.startsWith('PC10')) res=decodeSKU_PC10(sku);
 else if(sku.startsWith('SM24')) res=decodeSKU_SM24(sku);
 else if(sku.startsWith('SM30')) res=decodeSKU_SM30(sku);
-else if(sku.startsWith('SM2')) res=decodeSKU_SM20(sku);
+else if(sku.startsWith('SM20')) res=decodeSKU_SM20(sku);
+else if(sku.startsWith('SM25')) res=decodeSKU_SM25(sku);
 else if(sku.startsWith('US20')||sku.startsWith('S20')) res=decodeSKU_US20(sku);
 else if(sku.startsWith('US30')) res=decodeSKU_US30(sku);
 else if(sku.match(/^U20/)) res=decodeSKU_UL20(sku);
@@ -674,13 +675,30 @@ const blocks=[
 _b('SM24','Model','SM24','is-model'),
 _b(net,'LTE',_net(net)),
 _b(wifi||'—','Wi-Fi',wifi==='E'?'Wi-Fi 6E':'Wi-Fi',wifi==='E'?'is-wifi6':''),
-_b(ver,'OS Version',{'W':'Android 16','U':'Android 14'}[ver]||ver),
+_b(ver,'OS Version',{'W':'Android 16','U':'Android 16'}[ver]||ver),
 _b(scan,'Scanner',{'2':'CM60E'}[scan]||scan),
-_b(cam,'Camera',{'R':'Rear only','F':'Front+Rear'}[cam]||cam),
+_b(cam,'Camera',{'C':'Front+Rear'}[cam]||cam),
 _b(lcd,'LCD',{'F':'FHD','H':'HD'}[lcd]||lcd),
-_b(kp||'—','Keypad',{'S':'—'}[kp]||kp||'—'),
+_b(kp||'—','Keypad',{'S':'NO'}[kp]||kp||'—'),
 _b(bat,'Battery',{'S':'4000mAh'}[bat]||bat),
-p3?_b(p3,'Special',{'HF':'HF (HF/NFC)','TH':'Integrated Trigger'}[p3]||p3,'is-special'):null,
+p3?_b(p3,'Special',{'HF':'HF (HF/NFC)'}[p3]||p3,'is-special'):null,
+];
+return {blocks,warning:'',tags:[]};
+}
+function decodeSKU_SM25(sku){
+const p=sku.split('-'),p1=p[0]||'',p2=p[1]||'',p3=p[2]||'';
+const net=p1[4]||'',wifi=p1[5]||'',ver=p2[0]||'',scan=p2[1]||'',cam=p2[2]||'',lcd=p2[3]||'',kp=p2[4]||'',bat=p2[5]||'';
+const blocks=[
+_b('SM25','Model','SM25','is-model'),
+_b(net,'LTE',_net(net)),
+_b(wifi||'—','Wi-Fi',wifi==='E'?'Wi-Fi 6E':'Wi-Fi',wifi==='E'?'is-wifi6':''),
+_b(ver,'OS Version',{'W':'Android 16','U':'Android 16'}[ver]||ver),
+_b(scan,'Scanner',{'2':'CM60E','F':'SE5500'}[scan]||scan),
+_b(cam,'Camera',{'C':'Front+Rear'}[cam]||cam),
+_b(lcd,'LCD',{'F':'FHD','H':'HD'}[lcd]||lcd),
+_b(kp||'—','Keypad',{'S':'NO'}[kp]||kp||'—'),
+_b(bat,'Battery',{'S':'4000mAh','E':'6000mAh'}[bat]||bat),
+p3?_b(p3,'Special',{'HF':'HF (HF/NFC)'}[p3]||p3,'is-special'):null,
 ];
 return {blocks,warning:'',tags:[]};
 }

@@ -803,7 +803,7 @@ for(const part of parts){const ui=part.indexOf('U');if(ui>=0){digits=part.slice(
 const scan=digits[0]||'',opts=digits[1]||'';
 const blocks=[
 _b(model,'Model',model,'is-model'),
-_b(scan,'Scanner',{'1':'SE4101','2':'SE5500','3':'E4770'}[scan]||scan),
+_b(scan,'Scanner',{'1':'SE4107','2':'SE5500','3':'E4770'}[scan]||scan),
 _b(opts,'Options',{'2':'Wrist Strap+USB-C'}[opts]||'—'),
 _b('1000','Battery','1000mAh'),
 ];

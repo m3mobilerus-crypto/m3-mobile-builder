@@ -680,7 +680,7 @@ _b(scan,'Scanner',{'2':'CM60E'}[scan]||scan),
 _b(cam,'Camera',{'C':'Front+Rear'}[cam]||cam),
 _b(lcd,'LCD',{'F':'FHD','H':'HD'}[lcd]||lcd),
 _b(kp||'—','Keypad',{'S':'NO'}[kp]||kp||'—'),
-_b(bat,'Battery',{'S':'4000mAh'}[bat]||bat),
+_b(bat,'Battery',{'S':'4000mAh','E':'6000mAh'}[bat]||bat),
 p3?_b(p3,'Special',{'HF':'HF (HF/NFC)'}[p3]||p3,'is-special'):null,
 ];
 return {blocks,warning:'',tags:[]};

@@ -730,7 +730,7 @@ const blocks=[
 _b(isPlus?'SL20+':'SL20','Model',isPlus?'SL20+':'SL20','is-model'),
 _b(net||'—','LTE',{'0':'NO','3':'Yes (3G)','4':'Yes (4G)','C':'Yes (4G)'}[net]||net),
 wifi?_b(wifi,'Wi-Fi',wifi==='E'?'Wi-Fi 6':'Wi-Fi',wifi==='E'?'is-wifi6':''):null,
-_b(ver,'OS Version',{'T':'Android 13'}[ver]||ver),
+_b(ver,'OS Version',{'T':'Android 13','R':'Android 11'}[ver]||ver),
 _b(scan,'Scanner',{'J':'E5','2':'SE4710'}[scan]||scan),
 _b(cam,'Camera',camMap[cam]||cam),
 _b(lcd,'LCD',{'F':'FHD','H':'HD'}[lcd]||lcd),
